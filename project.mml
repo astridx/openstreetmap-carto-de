@@ -7,7 +7,6 @@ _parts:
     - -90
     - 180
     - 90
-  # Extents are used for tilemill, and don't actually make it to the generated XML
   extents: &extents
     extent: *world
     srs-name: *srid
@@ -19,6 +18,8 @@ _parts:
     geometry_field: "way"
     srid: *srid
     extent: "-17367530,-7346360,17367530,7346360"
+
+srs: "+proj=eqearth +datum=WGS84 +no_defs"
 
 scale: 1
 metatile: 2
