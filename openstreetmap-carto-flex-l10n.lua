@@ -696,6 +696,11 @@ end
 local function add_linear(table_name, attrs, geom)
     for sgeom in geom:geometries() do
         attrs.way = sgeom
+
+        if next(attrs.tags) == nil then
+            attrs.tags.dummy = "true"
+        end
+
         insert_row(table_name, attrs)
     end
 end
