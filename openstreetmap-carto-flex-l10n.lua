@@ -631,7 +631,7 @@ local function gen_l10n_name(object, islinear, iscountry)
         local country_string,nlen
         names = osml10n.get_country_name(object.tags, L10NLANG, true)
         nlen = #(names)
-	country_string = names[nlen]
+	    country_string = names[nlen]
         for nameCount = 1, nlen-1 do
             if (names[nameCount] ~= '') then
                country_string = country_string .. delim .. names[nameCount]
@@ -658,10 +658,26 @@ local function prepare_columns(object, tag_map, ignore_type, islinear, iscountry
     local attrs = { tags = {}, layer = normalize_layer(object.tags.layer) }
     local found_tag = false
 
+    function clone_object(obj)
+        local copy = {}
+
+        copy.tags = {}
+        for k,v in pairs(obj.tags) do
+            copy.tags[k] = v
+        end
+
+        copy.get_bbox = function() return obj:get_bbox() end
+        copy.id = obj.id
+
+        return copy
+    end
+
+    local obj_copy = clone_object(object)
+
     for key, value in pairs(object.tags) do
         if tag_map[key] then
             if (key == 'name') and (L10NLANG ~= nil) then
-              attrs[key] = gen_l10n_name(object, islinear, iscountry)
+              attrs[key] = gen_l10n_name(obj_copy, islinear, iscountry)
             else
               attrs[key] = value
             end
@@ -696,11 +712,6 @@ end
 local function add_linear(table_name, attrs, geom)
     for sgeom in geom:geometries() do
         attrs.way = sgeom
-
-        if next(attrs.tags) == nil then
-            attrs.tags.dummy = "true"
-        end
-
         insert_row(table_name, attrs)
     end
 end
