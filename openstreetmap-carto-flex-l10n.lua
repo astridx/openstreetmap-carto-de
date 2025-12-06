@@ -658,26 +658,16 @@ local function prepare_columns(object, tag_map, ignore_type, islinear, iscountry
     local attrs = { tags = {}, layer = normalize_layer(object.tags.layer) }
     local found_tag = false
 
-    function clone_object(obj)
-        local copy = {}
-
-        copy.tags = {}
-        for k,v in pairs(obj.tags) do
-            copy.tags[k] = v
-        end
-
-        copy.get_bbox = function() return obj:get_bbox() end
-        copy.id = obj.id
-
-        return copy
+    local keys = {}
+    for k in pairs(object.tags) do
+        keys[#keys+1] = k
     end
 
-    local obj_copy = clone_object(object)
-
-    for key, value in pairs(object.tags) do
+    for _, key in ipairs(keys) do
+        local value = object.tags[key]
         if tag_map[key] then
             if (key == 'name') and (L10NLANG ~= nil) then
-              attrs[key] = gen_l10n_name(obj_copy, islinear, iscountry)
+              attrs[key] = gen_l10n_name(object, islinear, iscountry)
             else
               attrs[key] = value
             end
