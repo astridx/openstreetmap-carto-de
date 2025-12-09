@@ -658,19 +658,9 @@ local function prepare_columns(object, tag_map, ignore_type, islinear, iscountry
     local attrs = { tags = {}, layer = normalize_layer(object.tags.layer) }
     local found_tag = false
 
-    local keys = {}
-    for k in pairs(object.tags) do
-        keys[#keys+1] = k
-    end
-
-    for _, key in ipairs(keys) do
-        local value = object.tags[key]
+    for key, value in pairs(object.tags) do
         if tag_map[key] then
-            if (key == 'name') and (L10NLANG ~= nil) then
-              attrs[key] = gen_l10n_name(object, islinear, iscountry)
-            else
-              attrs[key] = value
-            end
+            attrs[key] = value
             found_tag = true
         elseif ignore_type and key == 'type' then -- luacheck: ignore 542
             -- do nothing
@@ -679,6 +669,10 @@ local function prepare_columns(object, tag_map, ignore_type, islinear, iscountry
             found_tag = true
         end
     end
+
+    if (L10NLANG ~= nil and attrs.name ~= nil then
+        attrs['name'] = gen_l10n_name(object, islinear, iscountry)
+    end]
 
     if not found_tag then
         return nil
