@@ -670,9 +670,9 @@ local function prepare_columns(object, tag_map, ignore_type, islinear, iscountry
         end
     end
 
-    if (L10NLANG ~= nil and attrs.name ~= nil then
-        attrs['name'] = gen_l10n_name(object, islinear, iscountry)
-    end]
+    if (L10NLANG ~= nil and attrs.name ~= nil) then
+        attrs.name = gen_l10n_name(object, islinear, iscountry)
+    end
 
     if not found_tag then
         return nil
