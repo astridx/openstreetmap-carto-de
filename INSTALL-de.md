@@ -15,7 +15,7 @@ This will also require the installation of the
 
 See [osml10n](https://github.com/giggls/osml10n) installation instructions for details.
 
-If you want to change the target langugage from German to another language
+If you want to change the target language from German to another language
 using latin script change the 'L10NLANG' variable in
 ```openstreetmap-carto-flex-l10n.lua``` from 'de' to your desired language
 e.g.  'en', 'fr' or 'es'.
