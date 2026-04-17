@@ -41,7 +41,15 @@
       text-line-spacing: -0.4; // -0.02 em
     }
     text-fill: @country-labels;
+
+    /* Default font */
     text-face-name: @book-fonts;
+
+    /* Sinhala override */
+    [name =~ ".*[\u0D80-\u0DFF].*"] {
+      text-face-name: @sinhalafonts;
+    }
+
     text-halo-fill: @standard-halo-fill;
     text-halo-radius: @standard-halo-radius * 1.5;
     text-character-spacing: 0.5;

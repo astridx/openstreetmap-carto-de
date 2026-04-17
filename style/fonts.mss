@@ -175,3 +175,14 @@ Italics are only available for the (Latin-Greek-Cyrillic) base font, not the oth
 For a considerable number of labels this style will make no difference to the regular style.
 */
 @oblique-fonts: "Noto Sans Italic", @book-fonts;
+
+/*
+Sinhala-specific font override used for #country-names in style/placenames.mss.
+This font stack is applied to labels containing Sinhala script
+(U+0D80–U+0DFF) in order to ensure correct rendering of complex
+Sinhala conjuncts, vowel signs, and ligatures (e.g. ශ්‍රී).
+It overrides the default font stack to ensure proper glyph shaping
+via HarfBuzz.
+*/
+@sinhalafonts:
+    "Noto Sans Sinhala UI Regular",  @book-fonts;
